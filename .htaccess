@@ -10,6 +10,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ public/index.php/$1 [QSA,L]
 
 SetEnv DB_SERVER rh-db.clmsqy6mwf9l.us-west-1.rds.amazonaws.com,1433
+SetEnv DB_NAME rh
 SetEnv DB_USERNAME admin
 SetEnv DB_PASSWORD ZL5kB0SgIWD2VDyQXWLf
 SetEnv ENCRYPT_PASSWORD_KEY oc7yqqXqiaNOqFAMhRUbPo3dGqDI8wIB
