@@ -102,6 +102,7 @@ function login($method, $subroutes, $body) {
                 }
             }
             else {
+                echo 'Entro a login';
                 if (isset($body['username']) && isset($body['password'])) {
                     $loginController->validate($body['username'], $body['password'], $body['rememberMe']);
                 }
