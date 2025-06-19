@@ -24,8 +24,8 @@ $body = json_decode(file_get_contents('php://input'), true);
 
 $main = $requestUriParts[0] ?? '';
 print_r($requestUriParts);
-die();
 $route = $requestUriParts[1] ?? null;
+die();
 $subroutes = array_slice($requestUriParts, 2);
 
 if (str_starts_with($route, 'login')) {
