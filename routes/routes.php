@@ -26,8 +26,11 @@ $main = $requestUriParts[0] ?? '';
 if ($main !== 'rh-api') {
     pathNotFound();
 }
+echo 'Paso main';
 $route = $requestUriParts[1] ?? null;
+echo $route;
 $subroutes = array_slice($requestUriParts, 2);
+print_r($subroutes);
 
 if (str_starts_with($route, 'login')) {
     login($method, $subroutes, $body);
