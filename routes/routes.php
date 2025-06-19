@@ -23,6 +23,7 @@ $requestUriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 $body = json_decode(file_get_contents('php://input'), true);
 
 $main = $requestUriParts[0] ?? '';
+print_r($requestUriParts);
 $route = $requestUriParts[1] ?? null;
 echo route;
 die();
