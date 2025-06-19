@@ -23,13 +23,14 @@ $requestUriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 $body = json_decode(file_get_contents('php://input'), true);
 
 $main = $requestUriParts[0] ?? '';
+echo $main;
 $route = $requestUriParts[1] ?? null;
+echo route;
+die();
 $subroutes = array_slice($requestUriParts, 2);
 
 if (str_starts_with($route, 'login')) {
-    echo 5;
     login($method, $subroutes, $body);
-    echo 6;
 }
 else if (str_starts_with($route, 'logout')) {
     logout($method);
