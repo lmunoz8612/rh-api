@@ -22,20 +22,12 @@ $method = $_SERVER['REQUEST_METHOD'];
 $requestUriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 $body = json_decode(file_get_contents('php://input'), true);
 
-print_r($requestUriParts);
-print_r(array_slice($requestUriParts, 2));
 $main = $requestUriParts[0] ?? '';
-if ($main === 'public') {
-    $route = $requestUriParts[2] ?? null;
-    $subroutes = array_slice($requestUriParts, 3);
+if ($main !== 'rh-api') {
+    pathNotFound();
 }
-else {
-    if ($main !== 'rh-api') {
-        pathNotFound();
-    }
-    $route = $requestUriParts[1] ?? null;
-    $subroutes = array_slice($requestUriParts, 2);
-}
+$route = $requestUriParts[1] ?? null;
+$subroutes = array_slice($requestUriParts, 2);
 
 if (str_starts_with($route, 'login')) {
     login($method, $subroutes, $body);
