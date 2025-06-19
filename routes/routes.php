@@ -23,14 +23,19 @@ $requestUriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 $body = json_decode(file_get_contents('php://input'), true);
 
 $main = $requestUriParts[0] ?? '';
+echo 1;
 if ($main !== 'rh-api') {
     pathNotFound();
 }
+echo 2;
 $route = $requestUriParts[1] ?? null;
+echo 3;
 $subroutes = array_slice($requestUriParts, 2);
-
+echo 4;
 if (str_starts_with($route, 'login')) {
+    echo 5;
     login($method, $subroutes, $body);
+    echo 6;
 }
 else if (str_starts_with($route, 'logout')) {
     logout($method);
