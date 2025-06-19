@@ -19,11 +19,8 @@ spl_autoload_register(function ($className) {
 });
 
 $method = $_SERVER['REQUEST_METHOD'];
-echo $method;
 $requestUriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-print_r($requestUriParts);
 $body = json_decode(file_get_contents('php://input'), true);
-print_r(body);
 
 $main = $requestUriParts[0] ?? '';
 echo $main;
