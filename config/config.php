@@ -17,6 +17,4 @@ function dbConnection() {
     }
     return $connection;
 }
-
-dbConnection();
 ?>
