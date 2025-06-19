@@ -22,6 +22,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 $requestUriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 $body = json_decode(file_get_contents('php://input'), true);
 
+print_r($requestUriParts);
 $main = $requestUriParts[0] ?? '';
 if ($main === 'public') {
     $route = $requestUriParts[2] ?? null;
