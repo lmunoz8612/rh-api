@@ -10,6 +10,7 @@ session_set_cookie_params([
 session_start();
 
 require_once '../utils/response.php';
+require_once '../controlers/tokenController.php';
 
 spl_autoload_register(function ($className) {
     $controllerPath = __DIR__ . '/../controllers/' . $className . '.php';
