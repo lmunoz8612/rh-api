@@ -17,6 +17,7 @@ require_once '../controlers/tokenController.php';
 
 spl_autoload_register(function ($className) {
     $controllerPath = __DIR__ . '/../controllers/' . $className . '.php';
+    var_dump($controllerPath);
     if (file_exists($controllerPath)) {
         require_once $controllerPath;
     }
@@ -37,6 +38,7 @@ else if (str_starts_with($route, 'logout')) {
     logout($method);
 }
 else {
+    die();
     $tokenController = new TokenController();
     $validateToken = $tokenController->validate();
     if (isset($validateToken['ok'])) {
