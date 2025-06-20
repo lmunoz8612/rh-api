@@ -34,8 +34,8 @@ else if (str_starts_with($route, 'logout')) {
 }
 else {
     $tokenController = new TokenController();
-    $validateToken = $tokenController->validate();
     die();
+    $validateToken = $tokenController->validate();
     if (isset($validateToken['ok'])) {
         switch ($route) {
             case 'role':
