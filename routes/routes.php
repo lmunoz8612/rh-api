@@ -33,11 +33,8 @@ else if (str_starts_with($route, 'logout')) {
     logout($method);
 }
 else {
-    echo 1;
     $tokenController = new TokenController();
-    echo 2;
     $validateToken = $tokenController->validate();
-    echo 3;
     die();
     if (isset($validateToken['ok'])) {
         switch ($route) {
