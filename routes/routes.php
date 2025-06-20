@@ -12,7 +12,7 @@ session_start();
 require_once '../utils/response.php';
 
 spl_autoload_register(function ($className) {
-    $controllerPath = __DIR__ . '/../controllers/' . $className . '.php';
+    $controllerPath = __DIR__ . '/../controllers/' . ucfirst($className) . '.php';
     if (file_exists($controllerPath)) {
         require_once $controllerPath;
     }
