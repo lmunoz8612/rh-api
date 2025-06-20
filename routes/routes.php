@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',
@@ -16,7 +13,6 @@ require_once '../utils/response.php';
 
 spl_autoload_register(function ($className) {
     $controllerPath = __DIR__ . '/../controllers/' . $className . '.php';
-    var_dump($controllerPath);
     if (file_exists($controllerPath)) {
         require_once $controllerPath;
     }
