@@ -8,10 +8,7 @@ class Token {
     private $secretKey;
 
     public function __construct() {
-        echo 1;
-        die();
         $this->secretKey = getenv('ENCRYPT_PASSWORD_KEY');
-        echo 2;
     }
 
     public function validate() {
