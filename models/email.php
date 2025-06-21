@@ -20,12 +20,12 @@ Class Email {
             $this->mail->isSMTP();
             $this->mail->Host = 'smtp.office365.com';
             $this->mail->SMTPAuth = true;
-            $this->mail->Username = 'no-reply@vittilog.com';
+            $this->mail->Username = 'lvmunozf@outlook.com';
             $this->mail->Password = getenv('NOREPLY_MAIL_PASSWORD');
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $this->mail->Port = 587;
 
-            $this->mail->setFrom('no-reply@vittilog.com', 'No-Reply VICA');
+            $this->mail->setFrom('lvmunozf@outlook.com', 'No-Reply RH');
             $this->mail->addAddress($to, $to);
             
             $this->mail->CharSet = 'UTF-8';
