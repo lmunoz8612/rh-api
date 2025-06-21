@@ -13,14 +13,11 @@ Class UserFiles {
 
     public function upload($userId, $typeFile, $file) {
         try {
-            print_r($_POST);
-            print_r($_FILES);
-            die();
             if ($typeFile == self::TYPE_PROFILE_PICTURE) {
                 if (!$userId || $_FILES['profile_picture']['error'] !== UPLOAD_ERR_OK) {
                     throw new Exception('Error: No se pudo cargar la imagen.');
                 }
-        
+                
                 $filePath = $_FILES['profile_picture']['tmp_name'];
                 $fileName = $_FILES['profile_picture']['name'];
                 $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -40,6 +37,7 @@ Class UserFiles {
                 if (!$fopen) {
                     throw new Exception('Error: El archivo no se puede abrir.');
                 }
+                $file = file_get_contents($filePath);
 
                 $this->dbConnection->beginTransaction();
 
