@@ -16,7 +16,7 @@ Class Email {
 
     public function send($to, $subject, $message) {
         try {
-            $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $this->mail->SMTPDebug = SMTP::DEBUG_OFF;
             $this->mail->isSMTP();
             $this->mail->Host = 'smtp.office365.com';
             $this->mail->SMTPAuth = true;
