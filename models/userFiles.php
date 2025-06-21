@@ -37,7 +37,7 @@ Class UserFiles {
                 if (!$fopen) {
                     throw new Exception('Error: El archivo no se puede abrir.');
                 }
-                $file = file_get_contents($filePath);
+                $file = base64_encode(file_get_contents($filePath));
 
                 $this->dbConnection->beginTransaction();
 
