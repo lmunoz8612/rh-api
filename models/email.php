@@ -18,7 +18,7 @@ Class Email {
         try {
             $this->mail->SMTPDebug = SMTP::DEBUG_OFF;
             $this->mail->isSMTP();
-            $this->mail->Host = 'smtp.office365.com';
+            $this->mail->Host = 'smtp-mail.outlook.com';
             $this->mail->SMTPAuth = true;
             $this->mail->Username = 'no.reply.rh@outlook.es';
             $this->mail->Password = 'njetwjyjhkbdrwgs';
