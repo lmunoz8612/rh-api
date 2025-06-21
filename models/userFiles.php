@@ -12,6 +12,7 @@ Class UserFiles {
     }
 
     public function upload($userId, $typeFile, $file) {
+        var_dump($file);
         try {
             if ($typeFile == self::TYPE_PROFILE_PICTURE) {
                 if (!$userId || $_FILES['profile_picture']['error'] !== UPLOAD_ERR_OK) {
