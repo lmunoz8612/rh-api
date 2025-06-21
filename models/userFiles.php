@@ -66,7 +66,7 @@ Class UserFiles {
                             VALUES (:fk_user_id, :file, :file_name, :file_extension, :file_size, :type_file)";
                     $stmt3 = $this->dbConnection->prepare($sql3);
                     $stmt3->bindParam(':fk_user_id', $userId, PDO::PARAM_INT);
-                    $stmt3->bindParam(':file', $fileUrl, PDO::PARAM_STR);
+                    $stmt3->bindParam(':file', $file, PDO::PARAM_STR);
                     $stmt3->bindParam(':file_name', $fileName, PDO::PARAM_STR);
                     $stmt3->bindParam(':file_extension', $fileExt, PDO::PARAM_STR);
                     $stmt3->bindParam(':file_size', $fileSize, PDO::PARAM_INT);
