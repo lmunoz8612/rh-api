@@ -25,6 +25,7 @@ $params = $_GET;
 $main = $requestUriParts[0] ?? '';
 $route = $requestUriParts[1] ?? null;
 $subroutes = array_slice($requestUriParts, 2);
+print_r($subroutes);
 
 if (str_starts_with($route, 'login')) {
     login($method, $subroutes, $body);
