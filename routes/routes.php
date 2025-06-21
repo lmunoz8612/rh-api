@@ -153,13 +153,15 @@ function user($method, $subroutes, $body) {
     switch ($method) {
         case 'GET':
             if (count($subroutes) > 0) {
-                switch ($subroutes[0]) {
-                    case 'has_signed_policies':
-                        $userController->hasSignedPolicies();
-                        break;
-                    default:
-                        pathNotFound();
-                        break;
+                if (isset($subroutes[0])) {
+                    switch ($subroutes[0]) {
+                        case 'has_signed_policies':
+                            $userController->hasSignedPolicies();
+                            break;
+                        default:
+                            pathNotFound();
+                            break;
+                    }
                 }
             }
 
@@ -174,16 +176,18 @@ function user($method, $subroutes, $body) {
             break;
         case 'PUT':
             if (count($subroutes) > 0) {
-                switch ($subroutes[0]) {
-                    case 'status':
-                        $userController->updateStatus($body['id'], $body['status']);
-                        break;
-                    case is_numeric($subroutes[0]):
-                        $userController->update($subroutes[0], $body);
-                        break;    
-                    default:
-                        pathNotFound();
-                        break;
+                if (isset($subroutes[0])) {
+                    switch ($subroutes[0]) {
+                        case 'status':
+                            $userController->updateStatus($body['id'], $body['status']);
+                            break;
+                        case is_numeric($subroutes[0]):
+                            $userController->update($subroutes[0], $body);
+                            break;    
+                        default:
+                            pathNotFound();
+                            break;
+                    }
                 }
             }
 
@@ -210,13 +214,15 @@ function user_policies($method, $subroutes, $body) {
             break;
         case 'PUT':
             if (count($subroutes) > 0) {
-                switch ($subroutes[0]) {
-                    case 'status':
-                        $userPoliciesController->updateStatus($body);
-                        break;
-                    default:
-                        pathNotFound();
-                        break;
+                if (isset($subroutes[0])) {
+                    switch ($subroutes[0]) {
+                        case 'status':
+                            $userPoliciesController->updateStatus($body);
+                            break;
+                        default:
+                            pathNotFound();
+                            break;
+                    }
                 }
             }
 
@@ -423,16 +429,18 @@ function policies($method, $subroutes, $body) {
             break;
         case 'PUT':
             if (count($subroutes) > 0) {
-                switch ($subroutes[0]) {
-                    case 'status':
-                        $policiesController->updateStatus($body['id'], $body['status']);
-                        break;
-                    case is_numeric($subroutes[0]):
-                        $policiesController->update($subroutes[0], $body);
-                        break;    
-                    default:
-                        pathNotFound();
-                        break;
+                if (isset($subroutes[0])) {
+                    switch ($subroutes[0]) {
+                        case 'status':
+                            $policiesController->updateStatus($body['id'], $body['status']);
+                            break;
+                        case is_numeric($subroutes[0]):
+                            $policiesController->update($subroutes[0], $body);
+                            break;    
+                        default:
+                            pathNotFound();
+                            break;
+                    }
                 }
             }
 
@@ -449,24 +457,26 @@ function communication($method, $subroutes, $body) {
     switch ($method) {
         case 'GET':
             if (count($subroutes) > 0) {
-                switch ($subroutes[0]) {
-                    case 'dashboard':
-                        $communicationController->dashboard();
-                        break;
-                    case 'post':
-                        if (isset($params['id'])) {
-                            $communicationController->getPostById($params['id']);
-                        }
-                        break;
-                    case 'posts':
-                        $communicationController->getAllPosts();
-                        break;
-                    case 'post_types':
-                        $communicationController->getAllPostTypes();
-                        break;
-                    default:
-                        pathNotFound();
-                        break;
+                if (isset($subroutes[0])) {
+                    switch ($subroutes[0]) {
+                        case 'dashboard':
+                            $communicationController->dashboard();
+                            break;
+                        case 'post':
+                            if (isset($params['id'])) {
+                                $communicationController->getPostById($params['id']);
+                            }
+                            break;
+                        case 'posts':
+                            $communicationController->getAllPosts();
+                            break;
+                        case 'post_types':
+                            $communicationController->getAllPostTypes();
+                            break;
+                        default:
+                            pathNotFound();
+                            break;
+                    }
                 }
             }
 
@@ -474,25 +484,27 @@ function communication($method, $subroutes, $body) {
             break;
         case 'POST':
             if (count($subroutes) > 0) {
-                switch ($subroutes[0]) {
-                    case 'post':
-                        $communicationController->savePost($body);
-                        break;
-                    case 'post_file':
-                        $communicationController->uploadPostFile($_POST);
-                        break;
-                    case 'birthday_reaction':
-                        $communicationController->addBirthdayReaction($body);
-                        break;
-                    case 'remove_birthday_reaction':
-                        $communicationController->removeBirthdayReaction($body);
-                        break;
-                    case 'birthday_comment':
-                        $communicationController->addBirthdayComment($body);
-                        break;
-                    default:
-                        pathNotFound();
-                        break;
+                if (isset($subroutes[0])) {
+                    switch ($subroutes[0]) {
+                        case 'post':
+                            $communicationController->savePost($body);
+                            break;
+                        case 'post_file':
+                            $communicationController->uploadPostFile($_POST);
+                            break;
+                        case 'birthday_reaction':
+                            $communicationController->addBirthdayReaction($body);
+                            break;
+                        case 'remove_birthday_reaction':
+                            $communicationController->removeBirthdayReaction($body);
+                            break;
+                        case 'birthday_comment':
+                            $communicationController->addBirthdayComment($body);
+                            break;
+                        default:
+                            pathNotFound();
+                            break;
+                    }
                 }
             }
 
@@ -500,19 +512,21 @@ function communication($method, $subroutes, $body) {
             break;
         case 'PUT':
             if (count($subroutes) > 0) {
-                switch ($subroutes[0]) {
-                    case 'post':
-                        if (isset($subroutes[1])) {
-                            if (is_numeric($subroutes[1])) {
-                                $communicationController->updatePost($subroutes[1], $body);
+                if (isset($subroutes[0])) {
+                    switch ($subroutes[0]) {
+                        case 'post':
+                            if (isset($subroutes[1])) {
+                                if (is_numeric($subroutes[1])) {
+                                    $communicationController->updatePost($subroutes[1], $body);
+                                }
                             }
-                        }
-                        break;
-                    case 'post_status':
-                        $communicationController->updatePostStatus($body);
-                        break;
-                    default:
-                        break;
+                            break;
+                        case 'post_status':
+                            $communicationController->updatePostStatus($body);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
