@@ -51,7 +51,7 @@ Class UserFiles {
                     $sql2 = "UPDATE [user].[files] SET [file] = :file, file_name = :file_name, file_extension = :file_extension, file_size = :file_size
                             WHERE pk_file_id = :pk_file_id";
                     $stmt2 = $this->dbConnection->prepare($sql2);
-                    $stmt2->bindParam(':file', $fileUrl, PDO::PARAM_STR);
+                    $stmt2->bindParam(':file', $file, PDO::PARAM_STR);
                     $stmt2->bindParam(':file_name', $fileName, PDO::PARAM_STR);
                     $stmt2->bindParam(':file_extension', $fileExt, PDO::PARAM_STR);
                     $stmt2->bindParam(':file_size', $fileSize, PDO::PARAM_INT);
