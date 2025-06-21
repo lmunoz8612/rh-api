@@ -13,6 +13,9 @@ Class UserFiles {
 
     public function upload($userId, $typeFile, $file) {
         try {
+            print_r($_POST);
+            print_r($_FILES);
+            die();
             if ($typeFile == self::TYPE_PROFILE_PICTURE) {
                 if (!$userId || $_FILES['profile_picture']['error'] !== UPLOAD_ERR_OK) {
                     throw new Exception('Error: No se pudo cargar la imagen.');
