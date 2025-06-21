@@ -18,14 +18,13 @@ spl_autoload_register(function ($className) {
 require_once '../utils/response.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
-$requestUriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+$requestUriParts = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
 $body = json_decode(file_get_contents('php://input'), true);
 $params = $_GET;
 
 $main = $requestUriParts[0] ?? '';
 $route = $requestUriParts[1] ?? null;
 $subroutes = array_slice($requestUriParts, 2);
-print_r($subroutes);
 
 if (str_starts_with($route, 'login')) {
     login($method, $subroutes, $body);
