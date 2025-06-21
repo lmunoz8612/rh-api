@@ -20,8 +20,8 @@ Class Email {
             $this->mail->isSMTP();
             $this->mail->Host = 'smtp.office365.com';
             $this->mail->SMTPAuth = true;
-            $this->mail->Username = 'lvmunozf@outlook.com';
-            $this->mail->Password = 'Kingdiamond2025';
+            $this->mail->Username = 'no.reply.rh@outlook.es';
+            $this->mail->Password = 'PHVMQ-S7LA5-GF56D-5MK4V-2WR8V';
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $this->mail->Port = 587;
 
