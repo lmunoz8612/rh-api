@@ -16,12 +16,12 @@ Class Email {
 
     public function send($to, $subject, $message) {
         try {
-            $this->mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $this->mail->SMTPDebug = SMTP::DEBUG_OFF;
             $this->mail->isSMTP();
             $this->mail->Host = 'smtp.office365.com';
             $this->mail->SMTPAuth = true;
             $this->mail->Username = 'no.reply.rh@outlook.es';
-            $this->mail->Password = 'PHVMQ-S7LA5-GF56D-5MK4V-2WR8V';
+            $this->mail->Password = 'njetwjyjhkbdrwgs';
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $this->mail->Port = 587;
 
