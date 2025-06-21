@@ -18,7 +18,7 @@ spl_autoload_register(function ($className) {
 require_once '../utils/response.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
-$requestUriParts = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+$requestUriParts = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/?'));
 $body = json_decode(file_get_contents('php://input'), true);
 $params = $_GET;
 
