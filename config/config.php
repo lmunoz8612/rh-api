@@ -13,7 +13,8 @@ function dbConnection() {
     }
     catch (PDOException $error) {
         http_response_code(500);
-        json_encode(['error' => true, 'message' => 'Error de conexión: ' . $error->getMessage()], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        echo json_encode(['error' => true, 'message' => 'Error de conexión: ' . $error->getMessage()], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        exit();
     }
     return $connection;
 }
