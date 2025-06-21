@@ -36,7 +36,7 @@ if (str_starts_with($route, 'logout')) {
 
 $tokenController = new TokenController();
 $validateToken = $tokenController->validate();
-if (isset($validateToken['ok'])) {
+if (!isset($validateToken['ok'])) {
     unAuthorized();
 }
 
