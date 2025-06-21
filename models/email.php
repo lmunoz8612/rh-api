@@ -25,7 +25,7 @@ Class Email {
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $this->mail->Port = 587;
 
-            $this->mail->setFrom('lvmunozf@outlook.com', 'No-Reply RH');
+            $this->mail->setFrom('no.reply.rh@outlook.es', 'No-Reply RH');
             $this->mail->addAddress($to, $to);
             
             $this->mail->CharSet = 'UTF-8';
