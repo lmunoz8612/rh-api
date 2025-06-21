@@ -34,7 +34,8 @@ class Organization {
                 $positions[$value['pk_job_position_id']] = array (
                     'id' => $value['pk_job_position_id'],
                     'name' => $value['full_name'],
-                    'profile_picture' => $value['profile_picture'],
+                    'file_extension' => $value['file_extension'],
+                    'file' => $value['file'],
                     'position' => $value['job_position'],
                     'full_department' => $value['job_position_department'],
                     'department' => $value['job_position_department_short'],
