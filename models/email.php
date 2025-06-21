@@ -21,7 +21,7 @@ Class Email {
             $this->mail->Host = 'smtp-mail.outlook.com';
             $this->mail->SMTPAuth = true;
             $this->mail->Username = 'no.reply.rh@outlook.es';
-            $this->mail->Password = 'njetwjyjhkbdrwgs';
+            $this->mail->Password = 'Kingdiamond2025';
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $this->mail->Port = 587;
 
