@@ -19,6 +19,8 @@ require_once '../utils/response.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $requestUriParts = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/?'));
+print_r($requestUriParts);
+die();
 $body = json_decode(file_get_contents('php://input'), true);
 $params = $_GET;
 
