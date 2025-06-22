@@ -153,6 +153,8 @@ function user($method, $subroutes, $body) {
     switch ($method) {
         case 'GET':
             if (count($subroutes) > 0) {
+                print_r($subroutes);
+                die();
                 if (isset($subroutes[0])) {
                     switch ($subroutes[0]) {
                         case 'has_signed_policies':
