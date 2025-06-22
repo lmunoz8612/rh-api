@@ -106,6 +106,7 @@ class Policies {
                      LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
                      LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
                      WHERE jp.fk_job_position_type_id IN (:fk_job_position_type_ids)";
+                $stmt2 = $this->dbConnection->prepare($sql2);
                 $positionTypes = JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATIONAL;
                 $stmt2->bindParam(':fk_job_position_type_ids', $positionTypes, PDO::PARAM_STR);
             }
@@ -115,9 +116,10 @@ class Policies {
                      LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
                      LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
                      WHERE jp.fk_job_position_type_id = :fk_job_position_type_id";
+                $stmt2 = $this->dbConnection->prepare($sql2);
                 $stmt2->bindParam(':fk_job_position_type_id', $data['fk_job_position_type_id'], PDO::PARAM_INT);
             }
-            $stmt2 = $this->dbConnection->prepare($sql2);
+            
             $stmt2->execute();
             $result = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             if (!empty($result)) {
