@@ -18,7 +18,7 @@ class JobPosition {
 
     // Type
     const TYPE_ADMIN = 1;
-    const TYPE_OPERATIONAL = 1;
+    const TYPE_OPERATIONAL = 2;
     const TYPE_ALL = 3;
 
     public function __construct() {
