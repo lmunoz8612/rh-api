@@ -101,14 +101,13 @@ class Policies {
 
             // Envío de notificación:
             if ($data['fk_job_position_type_id'] == JobPosition::TYPE_ALL) {
-                $sql2 = "SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
+                $positionTypes = JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATIONAL;
+                $sql2 = sprintf("SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
                      FROM [user].[users] u
                      LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
                      LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
-                     WHERE jp.fk_job_position_type_id IN (:fk_job_position_type_ids)";
+                     WHERE jp.fk_job_position_type_id IN (%s)", $positionTypes);
                 $stmt2 = $this->dbConnection->prepare($sql2);
-                $positionTypes = JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATIONAL;
-                $stmt2->bindParam(':fk_job_position_type_ids', $positionTypes, PDO::PARAM_INT);
             }
             else {
                 $sql2 = "SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
