@@ -100,21 +100,24 @@ class Policies {
             }
 
             // Envío de notificación:
-            $sql2 = "SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
+            if ($data['fk_job_position_type_id'] == JobPosition::TYPE_ALL) {
+                $sql2 = "SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
+                     FROM [user].[users] u
+                     LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
+                     LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
+                     WHERE jp.fk_job_position_type_id IN (:fk_job_position_type_ids)";
+                $positionTypes = JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATIONAL;
+                $stmt2->bindParam(':fk_job_position_type_ids', $positionTypes, PDO::PARAM_STR);
+            }
+            else {
+                $sql2 = "SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
                      FROM [user].[users] u
                      LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
                      LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
                      WHERE jp.fk_job_position_type_id = :fk_job_position_type_id";
-            $stmt2 = $this->dbConnection->prepare($sql2);
-            if ($data['fk_job_position_type_id'] === JobPosition::TYPE_ALL) {
-                $positionType = 'IN(' . JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATIONAL . ')';
-                $stmt2->bindParam(':fk_job_position_type_id', $positionType, PDO::PARAM_STR);
-            }
-            else {
                 $stmt2->bindParam(':fk_job_position_type_id', $data['fk_job_position_type_id'], PDO::PARAM_INT);
             }
-            $positionType = ($data['fk_job_position_type_id'] === JobPosition::TYPE_ALL) ? JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATION : $data['fk_job_position_type_id'];
-            $stmt2->bindParam(':fk_job_position_type_id', $positionType, PDO::PARAM_INT);
+            $stmt2 = $this->dbConnection->prepare($sql2);
             $stmt2->execute();
             $result = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             if (!empty($result)) {
