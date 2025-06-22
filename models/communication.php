@@ -14,13 +14,9 @@ class Communication {
             $data = ['posts' => [], 'events' => [], 'c4' => [], 'news' => []];
 
             // Comunicados, Eventos y Espacio C4.
-            $sqlPosts = "
-                SELECT *
-                FROM [communication].[posts]
-                WHERE CAST(publish_date AS DATE) <= CAST(GETDATE() AS DATE)
-                AND [status] = 1
-                ORDER BY publish_date DESC
-            ";
+            $sqlPosts = "SELECT * FROM [communication].[posts]
+                         WHERE CAST(publish_date AS DATE) <= CAST(GETDATE() AS DATE) AND [status] = 1
+                         ORDER BY publish_date DESC";
             $resultPosts = $this->dbConnection->query($sqlPosts)->fetchAll(PDO::FETCH_ASSOC);
             if (count($resultPosts) > 0) {
                 foreach ($resultPosts as $post) {
@@ -178,7 +174,8 @@ class Communication {
     public function updatePost($pk_post_id, $data) {
         try {
             $this->dbConnection->beginTransaction();
-            $sql = 'UPDATE [communication].[posts] SET [fk_post_type_id] = :fk_post_type_id, [publish_date] = :publish_date, [title] = :title, [content] = :content, [updated_by] = :updated_by
+            $sql = 'UPDATE [communication].[posts]
+                    SET [fk_post_type_id] = :fk_post_type_id, [publish_date] = :publish_date, [title] = :title, [content] = :content, [updated_by] = :updated_by
                     WHERE pk_post_id = :pk_post_id';
             $stmt = $this->dbConnection->prepare($sql);
             $pk_user_id = isset($_SESSION['pk_user_id']) ? $_SESSION['pk_user_id'] : 0;
@@ -296,7 +293,8 @@ class Communication {
     public function addBirthdayReaction($data) {
         try {
             $this->dbConnection->beginTransaction();
-            $sql1 = 'DELETE FROM [communication].[birthday_reactions] WHERE fk_birthday_id = :fk_birthday_id AND fk_user_id = :fk_user_id';
+            $sql1 = "DELETE FROM [communication].[birthday_reactions]
+                     WHERE fk_birthday_id = :fk_birthday_id AND fk_user_id = :fk_user_id";
             $stmt1 = $this->dbConnection->prepare($sql1);
             $stmt1->bindParam(':fk_birthday_id', $data['fk_birthday_id'], PDO::PARAM_INT);
             $stmt1->bindParam(':fk_user_id', $data['fk_user_id'], PDO::PARAM_INT);
@@ -304,7 +302,8 @@ class Communication {
                 throw new Exception('Error: No se pudo ejecutar correctamente la limpieza de reacción del cumpleaños.');
             }
 
-            $sql2 = 'INSERT INTO [communication].[birthday_reactions](fk_birthday_id, fk_user_id, reaction_type) VALUES(:fk_birthday_id, :fk_user_id, :reaction_type)';
+            $sql2 = "INSERT INTO [communication].[birthday_reactions](fk_birthday_id, fk_user_id, reaction_type)
+                     VALUES(:fk_birthday_id, :fk_user_id, :reaction_type)";
             $stmt2 = $this->dbConnection->prepare($sql2);
             $stmt2->bindParam(':fk_birthday_id', $data['fk_birthday_id'], PDO::PARAM_INT);
             $stmt2->bindParam(':fk_user_id', $data['fk_user_id'], PDO::PARAM_INT);
@@ -330,7 +329,9 @@ class Communication {
     public function removeBirthdayReaction($data) {
         try {
             $this->dbConnection->beginTransaction();
-            $sql = 'DELETE FROM [communication].[birthday_reactions] WHERE fk_birthday_id = :fk_birthday_id AND fk_user_id = :fk_user_id';
+            $sql = "DELETE FROM [communication].[birthday_reactions]
+                    WHERE fk_birthday_id = :fk_birthday_id
+                    AND fk_user_id = :fk_user_id";
             $stmt = $this->dbConnection->prepare($sql);
             $stmt->bindParam(':fk_birthday_id', $data['fk_birthday_id'], PDO::PARAM_INT);
             $stmt->bindParam(':fk_user_id', $data['fk_user_id'], PDO::PARAM_INT);
@@ -355,7 +356,8 @@ class Communication {
     public function addBirthdayComment($data) {
         try {
             $this->dbConnection->beginTransaction();
-            $sql = 'INSERT INTO [communication].[birthday_comments](fk_birthday_id, fk_user_id, comment) VALUES(:fk_birthday_id, :fk_user_id, :comment)';
+            $sql = "INSERT INTO [communication].[birthday_comments](fk_birthday_id, fk_user_id, comment)
+                    VALUES(:fk_birthday_id, :fk_user_id, :comment)";
             $stmt = $this->dbConnection->prepare($sql);
             $stmt->bindParam(':fk_birthday_id', $data['fk_birthday_id'], PDO::PARAM_INT);
             $stmt->bindParam(':fk_user_id', $data['fk_user_id'], PDO::PARAM_INT);

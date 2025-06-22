@@ -14,7 +14,11 @@ class Login {
 
     public function validate($username, $password, $rememberMe) {
         try {
-            $sql1 = "SELECT TOP 1 ua.*, u.has_signed_policies FROM [user].[users_auth] ua JOIN [user].[users] u ON ua.[fk_user_id] = u.[pk_user_id] WHERE ua.[username] = '$username' AND u.[is_active] = 1";
+            $sql1 = "SELECT TOP 1 ua.*, u.has_signed_policies
+                     FROM [user].[users_auth] ua
+                     JOIN [user].[users] u ON ua.[fk_user_id] = u.[pk_user_id]
+                     WHERE ua.[username] = '$username'
+                     AND u.[is_active] = 1";
             $result = $this->dbConnection->query($sql1)->fetch(PDO::FETCH_ASSOC);
             if ($result) {
                 $decryptedPassword = $this->decryptedPassword($password);
@@ -40,7 +44,9 @@ class Login {
                     // Actualizar la fecha de último inicio de sesión:
                     $this->dbConnection->beginTransaction();
 
-                    $sql2 = 'UPDATE [user].[users_auth] SET [last_access_at] = GETDATE() WHERE [pk_user_auth_id] = :pk_user_auth_id AND [fk_user_id] = :fk_user_id;';
+                    $sql2 = 'UPDATE [user].[users_auth] SET [last_access_at] = GETDATE()
+                             WHERE [pk_user_auth_id] = :pk_user_auth_id
+                             AND [fk_user_id] = :fk_user_id;';
                     $stmt2 = $this->dbConnection->prepare($sql2);
                     $stmt2->bindParam(':pk_user_auth_id', $result['pk_user_auth_id'], PDO::PARAM_INT);
                     $stmt2->bindParam(':fk_user_id', $result['fk_user_id'], PDO::PARAM_INT);
@@ -80,18 +86,14 @@ class Login {
     public function passwordRecovery($username) {
         try {
             if (trim(isset($username))) {
-                $sql1 = "
-                    SELECT
-                        UsersAuth.*,
-                        CASE 
-                            WHEN Users.institutional_email = '-' THEN Users.personal_email 
-                            ELSE Users.institutional_email 
-                        END AS email,
-                        CONCAT(Users.first_name, ' ', Users.last_name_1, ' ', Users.last_name_2) AS user_full_name
-                    FROM [user].[users_auth] UsersAuth
-                    INNER JOIN [user].[users] Users ON UsersAuth.fk_user_id = Users.pk_user_id
-                    WHERE UsersAuth.username = '$username'
-                ";
+                $sql1 = "SELECT UsersAuth.*,
+                            CASE WHEN Users.institutional_email = '-'
+                            THEN Users.personal_email
+                            ELSE Users.institutional_email END AS email,
+                            CONCAT(Users.first_name, ' ', Users.last_name_1, ' ', Users.last_name_2) AS user_full_name
+                         FROM [user].[users_auth] UsersAuth
+                         INNER JOIN [user].[users] Users ON UsersAuth.fk_user_id = Users.pk_user_id
+                         WHERE UsersAuth.username = '$username'";
                 $result = $this->dbConnection->query($sql1)->fetch(PDO::FETCH_ASSOC);
                 if (isset($result['pk_user_auth_id'])) {
                     $this->dbConnection->beginTransaction();
@@ -103,7 +105,8 @@ class Login {
                     
                     // Crear el token de recuperación de contraseña.
                     $token = password_hash($username, PASSWORD_BCRYPT);
-                    $sql3 = 'INSERT INTO [user].[password_resets] ([username], [token], [created_at]) VALUES(:username, :token, GETDATE());';
+                    $sql3 = 'INSERT INTO [user].[password_resets] ([username], [token], [created_at])
+                             VALUES(:username, :token, GETDATE());';
                     $stmt3 = $this->dbConnection->prepare($sql3);
                     $stmt3->bindParam(':username', $username, PDO::PARAM_STR);
                     $stmt3->bindParam(':token', $token, PDO::PARAM_STR);
@@ -155,7 +158,10 @@ class Login {
     public function passwordUpdate($token, $newPassword, $confirmPassword) {
         try {
             if (isset($token)) {
-                $sql1 = "SELECT TOP 1 * FROM [user].[password_resets] WHERE [token] = '$token' AND DATEADD(HOUR, 1, [created_at]) > GETDATE()";
+                $sql1 = "SELECT TOP 1 *
+                         FROM [user].[password_resets]
+                         WHERE [token] = '$token'
+                         AND DATEADD(HOUR, 1, [created_at]) > GETDATE()";
                 $result = $this->dbConnection->query($sql1)->fetch(PDO::FETCH_ASSOC);
                 if (isset($result['pk_password_reset_id'])) {
                     if (isset($newPassword) && isset($confirmPassword)) {
