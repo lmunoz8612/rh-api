@@ -3,18 +3,6 @@ require_once '../config/config.php';
 
 class JobPositions {
     private $dbConnection;
-    
-    // User status
-    const STATUS_AVAILABLE = 1;
-    const STATUS_BUSY = 2;
-    const STATUS_INACTIVE = 3;
-
-    // Admin status
-    const ADMIN_STATUS_CREATED = 1;
-    const ADMIN_STATUS_IN_SEARCH = 2;
-    const ADMIN_STATUS_IN_SELECTION = 3;
-    const ADMIN_STATUS_BUSY = 4;
-    const ADMIN_STATUS_INACTIVE = 5;
 
     public function __construct() {
         $this->dbConnection = dbConnection();

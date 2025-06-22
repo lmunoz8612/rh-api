@@ -16,6 +16,11 @@ class JobPosition {
     const ADMIN_STATUS_BUSY = 4;
     const ADMIN_STATUS_INACTIVE = 5;
 
+    // Type
+    const TYPE_ADMIN = 1;
+    const TYPE_OPERATIONAL = 1;
+    const TYPE_ALL = 3;
+
     public function __construct() {
         $this->dbConnection = dbConnection();
     }

@@ -1,6 +1,7 @@
 <?php
 require_once '../config/config.php';
 require_once 'email.php';
+require_once 'jobPosition.php';
 
 class Policies {
     private $dbConnection;
@@ -105,11 +106,17 @@ class Policies {
                      LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
                      WHERE jp.fk_job_position_type_id = :fk_job_position_type_id";
             $stmt2 = $this->dbConnection->prepare($sql2);
-            $stmt2->bindParam(':fk_job_position_type_id', $data['fk_job_position_type_id'], PDO::PARAM_INT);
+            if ($data['fk_job_position_type_id'] === JobPosition::TYPE_ALL) {
+                $positionType = 'IN(' . JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATIONAL . ')';
+                $stmt2->bindParam(':fk_job_position_type_id', $positionType, PDO::PARAM_STR);
+            }
+            else {
+                $stmt2->bindParam(':fk_job_position_type_id', $data['fk_job_position_type_id'], PDO::PARAM_INT);
+            }
+            $positionType = ($data['fk_job_position_type_id'] === JobPosition::TYPE_ALL) ? JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATION : $data['fk_job_position_type_id'];
+            $stmt2->bindParam(':fk_job_position_type_id', $positionType, PDO::PARAM_INT);
             $stmt2->execute();
             $result = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-            print_r($result);
-            die();
             if (!empty($result)) {
                 $sql3 = "UPDATE [user].[users] SET has_signed_policies = 0
                          WHERE pk_user_id IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(:pk_user_ids, ','))";
