@@ -57,9 +57,6 @@ switch ($route) {
         users($method, $subroutes, $body);
         break;
     case 'user':
-        print_r($requestUriParts);
-        print_r($subroutes);
-        die();
         user($method, $subroutes, $body);
         break;
     case 'temperature':
