@@ -108,6 +108,8 @@ class Policies {
             $stmt2->bindParam(':fk_job_position_type_id', $data['fk_job_position_type_id'], PDO::PARAM_INT);
             $stmt2->execute();
             $result = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+            print_r($result);
+            die();
             if (!empty($result)) {
                 $sql3 = "UPDATE [user].[users] SET has_signed_policies = 0
                          WHERE pk_user_id IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(:pk_user_ids, ','))";
