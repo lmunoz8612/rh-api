@@ -50,7 +50,7 @@ Class UserFiles {
                 $message = '';
                 if ($exists) {
                     $sql2 = "UPDATE [user].[files] SET [file] = :file, file_name = :file_name, file_extension = :file_extension, file_size = :file_size
-                            WHERE pk_file_id = :pk_file_id";
+                             WHERE pk_file_id = :pk_file_id";
                     $stmt2 = $this->dbConnection->prepare($sql2);
                     $stmt2->bindParam(':file', $file, PDO::PARAM_STR);
                     $stmt2->bindParam(':file_name', $fileName, PDO::PARAM_STR);
@@ -64,7 +64,7 @@ Class UserFiles {
                 }
                 else {
                     $sql3 = "INSERT INTO [user].[files] (fk_user_id, [file], file_name, file_extension, file_size, type_file) 
-                            VALUES (:fk_user_id, :file, :file_name, :file_extension, :file_size, :type_file)";
+                             VALUES (:fk_user_id, :file, :file_name, :file_extension, :file_size, :type_file)";
                     $stmt3 = $this->dbConnection->prepare($sql3);
                     $stmt3->bindParam(':fk_user_id', $userId, PDO::PARAM_INT);
                     $stmt3->bindParam(':file', $file, PDO::PARAM_STR);

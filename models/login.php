@@ -120,14 +120,7 @@ class Login {
                     $subject = 'Solicitud de restablecimiento de contraseña';
                     $template = file_get_contents('../templates/password_recovery_email.html');
                     $template = str_replace('{{user_full_name}}', $result['user_full_name'], $template);
-                    $HTTP_HOST = null;
-                    if ($_SERVER['HTTP_HOST'] === 'localhost') {
-                        $HTTP_HOST = 'http://localhost:3000';
-                    }
-                    else {
-                        $HTTP_HOST = $_SERVER['HTTP_ORIGIN'];
-                    }
-                    $template = str_replace('{{reset_link}}', $HTTP_HOST."/restablecer-contraseña?token=$token", $template);
+                    $template = str_replace('{{reset_link}}', $_SERVER['HTTP_ORIGIN'] . "/restablecer-contraseña?token=$token", $template);
                     $message = $template;
                     $send = $email->send($result['email'], $subject, $message);
                     if (!$send) {

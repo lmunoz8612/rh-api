@@ -99,20 +99,18 @@ class Policies {
             }
 
             // Envío de notificación:
-            /*
-            $sql2 = "
-                SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
-                FROM [user].[users] u
-                LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
-                LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
-                WHERE jp.fk_job_position_type_id = :fk_job_position_type_id
-            ";
+            $sql2 = "SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
+                     FROM [user].[users] u
+                     LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
+                     LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
+                     WHERE jp.fk_job_position_type_id = :fk_job_position_type_id";
             $stmt2 = $this->dbConnection->prepare($sql2);
             $stmt2->bindParam(':fk_job_position_type_id', $data['fk_job_position_type_id'], PDO::PARAM_INT);
             $stmt2->execute();
             $result = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             if (!empty($result)) {
-                $sql3 = "UPDATE [user].[users] SET has_signed_policies = 0 WHERE pk_user_id IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(:pk_user_ids, ','))";
+                $sql3 = "UPDATE [user].[users] SET has_signed_policies = 0
+                         WHERE pk_user_id IN (SELECT CAST(value AS INT) FROM STRING_SPLIT(:pk_user_ids, ','))";
                 $stmt3 = $this->dbConnection->prepare($sql3);
                 $stmt3->bindValue(':pk_user_ids', implode(',', array_column($result, 'pk_user_id')), PDO::PARAM_INT);
                 if (!$stmt3->execute() && $stmt3->rowCount() === 0) {
@@ -121,14 +119,7 @@ class Policies {
 
                 $subject = 'Notificación de asignación de nueva política.';
                 $template = file_get_contents('../templates/new_policies_notification.html');
-                $HTTP_HOST = null;
-                if ($_SERVER['HTTP_HOST'] === 'localhost') {
-                    $HTTP_HOST = 'http://localhost:3000/politicas-empresa';
-                }
-                else {
-                    $HTTP_HOST = $_SERVER['HTTP_ORIGIN'].'/politicas-empresa';
-                }
-                $link = $HTTP_HOST;
+                $link = $_SERVER['HTTP_ORIGIN'].'/politicas-empresa';
                 
                 require_once '../models/email.php';
                 foreach ($result as $row) {
@@ -141,7 +132,6 @@ class Policies {
                     }
                 }
             }
-            */
 
             $this->dbConnection->commit();
             sendJsonResponse(200, ['ok' => true, 'message' => 'La nueva política fue creada exitosamente.']);
@@ -159,7 +149,9 @@ class Policies {
     public function update($id, $data) {
         try {
             $this->dbConnection->beginTransaction();
-            $sql = 'UPDATE [dbo].[policies] SET [policy] = :policy, [nom_iso] = :nom_iso, [fk_job_position_type_id] = :fk_job_position_type_id, [content] = :content, [updated_at] = GETDATE(), [updated_by] = :updated_by WHERE [pk_policy_id] = :pk_policy_id';
+            $sql = 'UPDATE [dbo].[policies]
+                    SET [policy] = :policy, [nom_iso] = :nom_iso, [fk_job_position_type_id] = :fk_job_position_type_id, [content] = :content, [updated_at] = GETDATE(), [updated_by] = :updated_by
+                    WHERE [pk_policy_id] = :pk_policy_id';
             $stmt = $this->dbConnection->prepare($sql);
             $stmt->bindParam(':policy', $data['policy'], PDO::PARAM_STR);
             $stmt->bindParam(':nom_iso', $data['nom_iso'], PDO::PARAM_STR);
