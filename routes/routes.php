@@ -20,7 +20,6 @@ require_once '../utils/response.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $requestUriParts = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/?'));
 $body = json_decode(file_get_contents('php://input'), true);
-$params = $_GET;
 
 $main = $requestUriParts[0] ?? '';
 $route = $requestUriParts[1] ?? null;
@@ -153,8 +152,6 @@ function user($method, $subroutes, $body) {
     switch ($method) {
         case 'GET':
             if (count($subroutes) > 0) {
-                print_r($subroutes);
-                die();
                 if (isset($subroutes[0])) {
                     switch ($subroutes[0]) {
                         case 'has_signed_policies':
@@ -167,8 +164,8 @@ function user($method, $subroutes, $body) {
                 }
             }
 
-            if (isset($params['id'])) {
-                $userController->getById($params['id']);
+            if (isset($_GET['id'])) {
+                $userController->getById($_GET['id']);
             }
             
             pathNotFound();
@@ -205,8 +202,8 @@ function user_policies($method, $subroutes, $body) {
     $userPoliciesController = new UserPoliciesController();
     switch ($method) {
         case 'GET':
-            if (isset($params['user_id']) && isset($params['signed'])) {
-                $userPoliciesController->getAll($params['user_id'], $params['signed']);
+            if (isset($_GET['user_id']) && isset($_GET['signed'])) {
+                $userPoliciesController->getAll($_GET['user_id'], $_GET['signed']);
             }
 
             $userPoliciesController->getAll();
@@ -240,8 +237,8 @@ function user_files($method, $subroutes, $body) {
     $userFilesController = new UserFilesController();
     switch ($method) {
         case 'GET':
-            if (isset($params['user_id']) && isset($params['type_file'])) {
-                $userFilesController->getByType($params['user_id'], $params['type_file']);
+            if (isset($_GET['user_id']) && isset($_GET['type_file'])) {
+                $userFilesController->getByType($_GET['user_id'], $_GET['type_file']);
             }
 
             pathNotFound();
@@ -272,7 +269,7 @@ function user_files($method, $subroutes, $body) {
 function temperature($method) {
     switch ($method) {
         case 'GET':
-            TemperatureController::get($params['latitude'], $params['longitude']);
+            TemperatureController::get($_GET['latitude'], $_GET['longitude']);
             break;
         default:
             methodNotAllowed();
@@ -287,11 +284,11 @@ function catalog($method, $subroutes, $body) {
             if (count($subroutes) > 0) {
                 if (isset($subroutes[0])) {
                     if (isset($subroutes[1])) {
-                        if (isset($params['id'])) {
-                            $catalogController->getItemById($subroutes[0], $subroutes[1], $params['id']);
+                        if (isset($_GET['id'])) {
+                            $catalogController->getItemById($subroutes[0], $subroutes[1], $_GET['id']);
                         }
 
-                        $catalogController->getAll($subroutes[0], $subroutes[1], isset($params['available']) ? $params['available'] : null);
+                        $catalogController->getAll($subroutes[0], $subroutes[1], isset($_GET['available']) ? $_GET['available'] : null);
                     }
 
                     internalServerError('No se recibió un nombre de catálogo válido.');
@@ -353,7 +350,7 @@ function job_positions($method, $subroutes, $body) {
     $jobPositionsController = new JobPositionsController();
     switch ($method) {
         case 'GET':
-            $jobPositionsController->getAll(isset($params['page']) ? $params['page'] : 1);
+            $jobPositionsController->getAll(isset($_GET['page']) ? $_GET['page'] : 1);
             pathNotFound();
             break;
         default:
@@ -369,11 +366,11 @@ function job_position($method, $subroutes, $body) {
             if (count($subroutes) > 0) {
                 if (isset($subroutes[0])) {
                     if ($subroutes[0] === 'positions') {
-                        if (isset($params['id'])) {
-                            $jobPositionController->getDataById($params['id']);
+                        if (isset($_GET['id'])) {
+                            $jobPositionController->getDataById($_GET['id']);
                         }
 
-                        $jobPositionController->getAll(isset($params['available']) ? $params['available'] : null);
+                        $jobPositionController->getAll(isset($_GET['available']) ? $_GET['available'] : null);
                     }
                 }
             }
@@ -416,12 +413,12 @@ function policies($method, $subroutes, $body) {
     $policiesController = new PoliciesController();
     switch ($method) {
         case 'GET':
-            if (isset($params['id'])) {
+            if (isset($_GET['id'])) {
                 if ($subroutes[0] === 'all_users_by_id') {
-                    $policiesController->getAllUsersById($params['id'], isset($params['page']) ? $params['page'] : 1);
+                    $policiesController->getAllUsersById($_GET['id'], isset($_GET['page']) ? $_GET['page'] : 1);
                 }
 
-                $policiesController->getById($params['id']);
+                $policiesController->getById($_GET['id']);
             }
 
             $policiesController->getAll();
@@ -465,8 +462,8 @@ function communication($method, $subroutes, $body) {
                             $communicationController->dashboard();
                             break;
                         case 'post':
-                            if (isset($params['id'])) {
-                                $communicationController->getPostById($params['id']);
+                            if (isset($_GET['id'])) {
+                                $communicationController->getPostById($_GET['id']);
                             }
                             break;
                         case 'posts':
