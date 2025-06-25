@@ -102,19 +102,21 @@ class Policies {
             // Envío de notificación:
             if ($data['fk_job_position_type_id'] == JobPosition::TYPE_ALL) {
                 $positionTypes = JobPosition::TYPE_ADMIN . ',' . JobPosition::TYPE_OPERATIONAL;
-                $sql2 = sprintf("SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
-                     FROM [user].[users] u
-                     LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
-                     LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
-                     WHERE jp.fk_job_position_type_id IN (%s)", $positionTypes);
+                $sql2 = sprintf("
+                    SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
+                    FROM [user].[users] u
+                    LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
+                    LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
+                    WHERE jp.fk_job_position_type_id IN (%s)
+                ", $positionTypes);
                 $stmt2 = $this->dbConnection->prepare($sql2);
             }
             else {
                 $sql2 = "SELECT u.pk_user_id, ua.username AS email, CONCAT(u.first_name, ' ' , u.last_name_1, ' ', u.last_name_2) AS full_name
-                     FROM [user].[users] u
-                     LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
-                     LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
-                     WHERE jp.fk_job_position_type_id = :fk_job_position_type_id";
+                         FROM [user].[users] u
+                         LEFT JOIN [job_position].[positions] jp ON u.fk_job_position_id = jp.pk_job_position_id
+                         LEFT JOIN [user].[users_auth] ua ON u.pk_user_id = ua.fk_user_id
+                         WHERE jp.fk_job_position_type_id = :fk_job_position_type_id";
                 $stmt2 = $this->dbConnection->prepare($sql2);
                 $stmt2->bindParam(':fk_job_position_type_id', $data['fk_job_position_type_id'], PDO::PARAM_INT);
             }

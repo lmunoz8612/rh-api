@@ -326,7 +326,7 @@ function catalog($method, $subroutes, $body) {
                             pathNotFound();
                         }
                         else {
-                            if (!isset($body['id'])) {
+                            if (isset($body['id'])) {
                                 $catalogController->updateItem($subroutes[0], $subroutes[1], $body);
                             }
 
