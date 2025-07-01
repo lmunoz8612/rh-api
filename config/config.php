@@ -7,8 +7,9 @@ define('DB_NAME', getenv('DB_NAME'));
 function dbConnection() {
     $connection = null;
     try {
-        $connection = new PDO('sqlsrv:server=' . DB_SERVER . ';Database=' . DB_NAME . ';Encrypt=no', DB_USERNAME, DB_PASSWORD); // Retirar ;Encrypt=no
+        $connection = new PDO('mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME . ';charset=utf8mb4', DB_USERNAME, DB_PASSWORD);
         http_response_code(200);
+        echo 'Conexión establecida';
         json_encode(['ok' => true, 'message' => 'Conexión establecida'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
     catch (PDOException $error) {
@@ -18,4 +19,6 @@ function dbConnection() {
     }
     return $connection;
 }
+
+dbConnection();
 ?>
