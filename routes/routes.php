@@ -20,11 +20,9 @@ require_once '../utils/response.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $requestUriParts = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/?'));
 $body = json_decode(file_get_contents('php://input'), true);
-echo json_encode(['request' => $requestUriParts]);
 
-$main = $requestUriParts[0] ?? '';
-$route = $requestUriParts[1] ?? null;
-$subroutes = array_slice($requestUriParts, 2);
+$route = $requestUriParts[2] ?? null;
+$subroutes = array_slice($requestUriParts, 3);
 
 if (str_starts_with($route, 'login')) {
     login($method, $subroutes, $body);
