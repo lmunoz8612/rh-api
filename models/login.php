@@ -21,6 +21,7 @@ class Login {
                      AND u.[is_active] = 1";
             $result = $this->dbConnection->query($sql1)->fetch(PDO::FETCH_ASSOC);
             print_r($result);
+            exit();
             if ($result) {
                 $decryptedPassword = $this->decryptedPassword($password);
                 print_r($decryptedPassword);
