@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    header('Access-Control-Allow-Origin: https://main.d285reo4b75oyd.amplifyapp.com');
+    header('Access-Control-Allow-Origin: https://rh-lm-hta4fvddbnbnhvax.mexicocentral-01.azurewebsites.net');
     header("Access-Control-Allow-Credentials: true");
     header('Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
 }
 
-header('Access-Control-Allow-Origin: https://main.d285reo4b75oyd.amplifyapp.com');
+header('Access-Control-Allow-Origin: https://rh-lm-hta4fvddbnbnhvax.mexicocentral-01.azurewebsites.net');
 header("Access-Control-Allow-Credentials: true");
 header('Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
