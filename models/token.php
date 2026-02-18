@@ -14,7 +14,7 @@ class Token {
     public function validate() {
         try {
             if (!isset($_COOKIE['token'])) {
-                return ['error' => true, 'message' => 'Usuario no autenticado.', 'cookie' => print_r($_COOKIE)];
+                return ['error' => true, 'message' => 'Usuario no autenticado.'];
             }
             
             $decoded = JWT::decode($_COOKIE['token'], new Key($this->secretKey, 'HS256'));
