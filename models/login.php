@@ -20,11 +20,8 @@ class Login {
                      WHERE ua.[username] = '$username'
                      AND u.[is_active] = 1";
             $result = $this->dbConnection->query($sql1)->fetch(PDO::FETCH_ASSOC);
-            echo json_encode(['result' => $result]);
             if ($result) {
                 $decryptedPassword = $this->decryptedPassword($password);
-                echo json_encode(['decryptedPassword' => $decryptedPassword]);
-                exit();
                 if (password_verify($decryptedPassword, $result['password'])) {
                     $expTime = $rememberMe ? time() + (30 * 24 * 60 * 60) : time() + (60 * 60);
                     $payload = [
