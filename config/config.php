@@ -6,10 +6,10 @@ define('DB_PASSWORD', getenv('DB_PASSWORD'));
 
 function dbConnection() {
     $connection = null;
+    echo json_encode(['ok' => 'Test', 'DB_SERVER' => DB_SERVER, 'Database' => DB_DATABASE, 'DB_USERNAME' => DB_USERNAME, 'DB_PASSWORD' => DB_PASSWORD];
     try {
-        $connection = new PDO('sqlsrv:server=' . DB_SERVER . ';Database=' . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+        $connection = new PDO('sqlsrv:server=' . DB_SERVER . ',1433;Database=' . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo json_encode(['ok' => true, 'message' => 'Conexión exitosa']);
     }
     catch (PDOException $error) {
         http_response_code(500);
