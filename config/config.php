@@ -9,6 +9,7 @@ function dbConnection() {
     try {
         $connection = new PDO('sqlsrv:server=' . DB_SERVER . ';Database=' . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        echo json_encode(['ok' => true, 'message' => 'Conexión exitosa']);
     }
     catch (PDOException $error) {
         http_response_code(500);
@@ -17,4 +18,6 @@ function dbConnection() {
     
     return $connection;
 }
+
+echo dbConnection();
 ?>
