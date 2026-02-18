@@ -9,8 +9,8 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ public/index.php/$1 [QSA,L]
 
-SetEnv DB_SERVER db-instance-rh.clmsqy6mwf9l.us-west-1.rds.amazonaws.com
-SetEnv DB_NAME rh
+SetEnv DB_SERVER rh-server-db.database.windows.net
+SetEnv DB_NAME rh-db
 SetEnv DB_USERNAME admin-rh
 SetEnv DB_PASSWORD Kingdiamond2025*
 SetEnv ENCRYPT_PASSWORD_KEY oc7yqqXqiaNOqFAMhRUbPo3dGqDI8wIB
